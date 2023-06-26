@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:08:53 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/25 20:19:45 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/26 15:26:49 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # include <stdio.h>
 # include "Libft/libft.h"
 # include "Ft_Printf/ft_printf.h"
+# include "Get_Next_Line/get_next_line.h"
 
 #endif
