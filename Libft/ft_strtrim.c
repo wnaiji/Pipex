@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:20:35 by wnaiji            #+#    #+#             */
-/*   Updated: 2022/11/17 00:12:58 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/27 13:57:34 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	boolean_0_trim(const char *s, const char *set)
 	return (0);
 }
 
-char	*ft_strtrim(const char *s, const char *set)
+char	*ft_strtrim(char *s, const char *set)
 {
 	int		i;
 	int		beg;
@@ -107,5 +107,6 @@ char	*ft_strtrim(const char *s, const char *set)
 		beg++;
 	}
 	tmp[i] = '\0';
+	free(s);
 	return (tmp);
 }

@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
+#    By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/26 15:33:27 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/06/27 14:27:05 by wnaiji           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c
+SRC = main.c \
+	parsing.c \
 
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
