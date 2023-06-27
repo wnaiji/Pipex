@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:06:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/26 15:28:57 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/27 10:49:27 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/*int	open_fd(char *file1)
+int	open_fd(char *file1)
 {
 	int	fd;
 
@@ -31,7 +31,7 @@
 	return (fd);
 }
 
-void	parsing_cmd(char *cmd1, char *cmd2)
+/*void	parsing_cmd(char *cmd1, char *cmd2)
 {
 	char	**split1;
 	char	**split2;
@@ -40,22 +40,23 @@ void	parsing_cmd(char *cmd1, char *cmd2)
 	split2 = ft_split(cmd2, ' ');
 	if (access(split1[0], X_OK) < 0)
 		perror("Error: cmd1 is not executable\n");
-}
+}*/
 
 void	pipex(char *file1, char *cmd1, char *cmd2, char *file2)
 {
 	int		fd;
-	//int		i;
-	//pid_t	id;
+	int		i;
+	pid_t	id;
 
-	//i = 0;
+	i = 0;
 	fd = open_fd(file1);
-	//id = fork();
-	//if (id < 0)
-		//perror("Error: fork\n")
-	char	*str;
-
-	str =
+	id = fork();
+	if (id < 0)
+		perror("Error: fork\n")
+	if (id = 0)
+		ft_printf("fils\n")
+	else
+		ft_printf("pere\n")
 
 }
 
@@ -72,11 +73,5 @@ int	main(int argc, char **argv)
 		ft_printf("Error: The number of argument is not correct\n");
 		exit(EXIT_FAILURE);
 	}
-	return (0);
-}*/
-
-int	main(void)
-{
-	ft_printf("test du Makefile");
 	return (0);
 }
