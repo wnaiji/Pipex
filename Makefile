@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+         #
+#    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/27 14:27:05 by wnaiji           ###   ########.fr        #
+#    Updated: 2023/06/27 22:35:48 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 NAME = pipex
 
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
 SUCCESS_MSG = "\033[0;32mCompilation successful. $(NAME) created.\033[0m\n"
 ERROR_MSG = "\033[0;31mCompilation failed.\033[0m\n"
 LIBFT_PATH = ./Libft/

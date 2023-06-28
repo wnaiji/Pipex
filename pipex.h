@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:08:53 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/27 15:10:20 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/28 08:22:01 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_arg
 	char	**cmd1;
 	char	**cmd2;
 	char	**env;
-	int		fd;
+	int		fd_in;
+	int		fd_out;
 }	t_arg;
 
 //Parsing des cmd et file:
