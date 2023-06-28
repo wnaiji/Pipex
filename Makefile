@@ -6,12 +6,13 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/28 18:16:10 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/06/28 19:08:47 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = main.c \
-	parsing.c
+	parsing.c \
+	outils.c
 
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

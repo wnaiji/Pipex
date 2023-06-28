@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:08:53 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 17:54:21 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/28 19:07:38 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,11 @@ typedef struct s_arg
 char	**parsing_cmd(char *cmd1);
 char	**ft_envp(char **envp);
 int		open_fd(char *file1);
+
+//outils:
+//utils.c
+void	ft_free(char **str);
+void	ft_close(t_arg arg);
+void	ft_error(char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:20:35 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/27 13:57:34 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/28 19:14:35 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ char	*ft_strtrim(char *s, const char *set)
 	if (beg == 0 && end == 0 && set[0] != '\0' && boolean_0_trim(s, set) == 1)
 		return (tmp = ft_s_null());
 	tmp = malloc(sizeof(char) * (ft_strlen(s) - beg - end + 1));
-	if (!tmp)
-		return (NULL);
 	while (i < len_tmp)
 	{
 		tmp[i] = s[beg];
