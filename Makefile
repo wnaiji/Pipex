@@ -6,7 +6,7 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/28 19:08:47 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/06/28 21:48:02 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,16 @@ SRC = main.c \
 	parsing.c \
 	outils.c
 
+SRC_BONUS = main_bonus.c \
+	parsing_bonus.c \
+	outils_bonus.c
+
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+OBJS_BONUS = $(addprefix $(OBJ_DIR)/,$(SRC_BONUS:.c=.o))
 
 NAME = pipex
+NAME_BONUS = pipex
 
 CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
 SUCCESS_MSG = "\033[0;32mCompilation successful. $(NAME) created.\033[0m\n"
@@ -40,7 +46,15 @@ $(NAME): $(OBJS)
 	@printf "\n"
 	@printf $(SUCCESS_MSG)
 
+$(NAME_BONUS): $(OBJS_BONUS)
+	@gcc $(CFLAGS) -L $(LIBFT_PATH) -l ft -L $(FT_PRINTF_PATH) -l ftprintf \
+		-L $(GNL) -l get_next_line $(OBJS_BONUS) -o $(NAME_BONUS)
+	@printf "\n"
+	@printf $(SUCCESS_MSG)
+
 all: $(NAME)
+
+bonus: $(NAME_BONUS)
 
 clean:
 	@rm -rf $(OBJ_DIR)
@@ -56,4 +70,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

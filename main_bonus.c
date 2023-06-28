@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 13:06:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 19:28:31 by walidnaiji       ###   ########.fr       */
+/*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
+/*   Updated: 2023/06/28 22:03:06 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	whild_one(t_arg arg)
 {
@@ -27,6 +27,29 @@ void	whild_one(t_arg arg)
 			dup2(arg.fd[1], STDOUT_FILENO);
 			ft_close(arg);
 			execve(str, arg.cmd1, arg.env);
+			ft_error("Erreur: execve\n");
+		}
+		free(str);
+		i++;
+	}
+	exit(EXIT_SUCCESS);
+}
+
+void	whild(t_arg arg, int nb)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (arg.env[i])
+	{
+		str = ft_ft_strjoin(arg.env[i], arg.cmd2[0]);
+		if (access(str, X_OK) == 0)
+		{
+			dup2(arg.fd[0], STDIN_FILENO);
+			dup2(arg.fd_out, STDOUT_FILENO);
+			ft_close(arg);
+			execve(str, arg.cmd2, arg.env);
 			ft_error("Erreur: execve\n");
 		}
 		free(str);
@@ -99,3 +122,4 @@ int	main(int argc, char **argv, char **envp)
 	//system("leaks pipex");
 	return (0);
 }
+
