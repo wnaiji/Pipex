@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:08:53 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 08:22:01 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/28 17:54:21 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ typedef struct s_arg
 	char	**env;
 	int		fd_in;
 	int		fd_out;
+	pid_t	pid1;
+	pid_t	pid2;
+	int		fd[2];
 }	t_arg;
 
 //Parsing des cmd et file:
