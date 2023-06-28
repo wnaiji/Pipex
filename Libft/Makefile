@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+         #
+#    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/27 11:03:58 by wnaiji           ###   ########.fr        #
+#    Updated: 2023/06/28 18:21:47 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ ERROR_MSG = "\033[0;31mCompilation failed.\033[0m\n"
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@gcc $(CFLAGS) -I . -c $< -o $@
-	@printf "                                              \rCompiling: $<"
+	@printf "\033[0;33m                            \rCompiling: $<\033[0m"
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)

@@ -6,19 +6,19 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/27 22:35:48 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/06/28 18:16:10 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = main.c \
-	parsing.c \
+	parsing.c
 
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 NAME = pipex
 
-CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
 SUCCESS_MSG = "\033[0;32mCompilation successful. $(NAME) created.\033[0m\n"
 ERROR_MSG = "\033[0;31mCompilation failed.\033[0m\n"
 LIBFT_PATH = ./Libft/
@@ -28,7 +28,7 @@ GNL = ./Get_Next_Line/
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	@gcc $(CFLAGS) -I . -c $< -o $@
-	@printf "\033[33m             \rCompiling: $<\033[0m"
+	@printf "             \rCompiling: $<"
 
 $(NAME): $(OBJS)
 	@make -C $(LIBFT_PATH)

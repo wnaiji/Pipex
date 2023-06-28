@@ -6,22 +6,28 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:06:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 17:57:56 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/28 18:36:15 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	print(char **str)
+void	ft_free(char **str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
-	{
-		ft_printf("%s\n", str[i]);
-		i++;
-	}
+		free(str[i++]);
+	free(str);
+}
+
+void	ft_close(t_arg arg)
+{
+	close(arg.fd[0]);
+	close(arg.fd[1]);
+	close(arg.fd_in);
+	close(arg.fd_out);
 }
 
 void	pipex(char **argv, char **envp)
@@ -54,11 +60,9 @@ void	pipex(char **argv, char **envp)
 			str = ft_ft_strjoin(arg.env[i], arg.cmd1[0]);
 			if (access(str, X_OK) == 0)
 			{
-				close(arg.fd[0]);
 				dup2(arg.fd_in, STDIN_FILENO);
-				close(arg.fd_in);
 				dup2(arg.fd[1], STDOUT_FILENO);
-				close(arg.fd[1]);
+				ft_close(arg);
 				execve(str, arg.cmd1, arg.env);
 				perror("Erreur: execve\n");
 				exit(EXIT_FAILURE);
@@ -70,7 +74,10 @@ void	pipex(char **argv, char **envp)
 	}
 	arg.pid2 = fork();
 	if (arg.pid2 < 0)
-		perror("Error: fork pid2\n");
+	{
+		perror("Error: fork pid1\n");
+		exit(EXIT_FAILURE);
+	}
 	if (arg.pid2 == 0)
 	{
 		i = 0;
@@ -79,11 +86,9 @@ void	pipex(char **argv, char **envp)
 			str = ft_ft_strjoin(arg.env[i], arg.cmd2[0]);
 			if (access(str, X_OK) == 0)
 			{
-				close(arg.fd[1]);
 				dup2(arg.fd[0], STDIN_FILENO);
-				close(arg.fd[0]);
 				dup2(arg.fd_out, STDOUT_FILENO);
-				close(arg.fd_out);
+				ft_close(arg);
 				execve(str, arg.cmd2, arg.env);
 				perror("Erreur: execve\n");
 				exit(EXIT_FAILURE);
@@ -93,23 +98,24 @@ void	pipex(char **argv, char **envp)
 		}
 		exit(EXIT_SUCCESS);
 	}
-	close(arg.fd[0]);
-	close(arg.fd[1]);
-	close(arg.fd_in);
-	close(arg.fd_out);
+	ft_close(arg);
 	waitpid(arg.pid1, NULL, 0);
 	waitpid(arg.pid2, NULL, 0);
+	ft_free(arg.env);
+	ft_free(arg.cmd1);
+	ft_free(arg.cmd2);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	if (argc == 5)
+	
 		pipex(argv, envp);
 	else
 	{
 		ft_printf("Error: The number of argument is not correct\n");
 		exit(EXIT_FAILURE);
 	}
-	//system("leaks pipex");
+	system("leaks pipex");
 	return (0);
 }
