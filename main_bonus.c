@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 22:03:06 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/29 11:04:33 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	whild(t_arg arg, int nb)
 {
 	int		i;
 	char	*str;
-
+(void)nb;
 	i = 0;
 	while (arg.env[i])
 	{
@@ -81,10 +81,10 @@ void	whild_two(t_arg arg)
 	exit(EXIT_SUCCESS);
 }
 
-void	pipex(char **argv, char **envp)
+void	pipex(int argc, char **argv, char **envp)
 {
 	t_arg	arg;
-
+(void)argc;
 	arg.cmd1 = parsing_cmd(argv[2]);
 	arg.cmd2 = parsing_cmd(argv[3]);
 	arg.env = ft_envp(envp);
@@ -112,8 +112,8 @@ void	pipex(char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc == 5)
-		pipex(argv, envp);
+	if (argc > 4)
+		pipex(argc, argv, envp);
 	else
 	{
 		ft_printf("Error: The number of argument is not correct\n");
