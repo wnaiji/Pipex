@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 17:10:29 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/29 20:20:14 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	whild_one(t_arg arg)
 	char	*str;
 
 	i = 0;
-	ft_printf("one\n");
 	dup2(arg.fd_in, STDIN_FILENO);
 	dup2(arg.fd[1], STDOUT_FILENO);
 	ft_close(arg);
@@ -64,17 +63,16 @@ void	whild(t_arg arg, char **argv, int argc, int nb)
 				if (access(str, X_OK) == 0)
 				{
 					execve(str, arg.cmd, arg.env);
-					ft_error("Erreur: execve\n");
+					ft_error("Error: execve\n");
 				}
 				free(str);
 				i++;
 			}
 		}
-		ft_printf("command not found: %s\n", arg.cmd[0]);
+		ft_printf("bash: %s: command not found\n", arg.cmd[0]);
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
-	ft_printf("la%d\n", nb);
 	if (nb < argc - 3)
 	{
 		nb++;
@@ -88,7 +86,6 @@ void	whild_two(t_arg arg)
 	char	*str;
 
 	i = 0;
-	ft_printf("last\n");
 	dup2(arg.fd[0], STDIN_FILENO);
 	dup2(arg.fd_out, STDOUT_FILENO);
 	ft_close(arg);
@@ -127,7 +124,7 @@ void	pipex(int argc, char **argv, char **envp)
 		ft_error("Error: fork pid1\n");
 	if (arg.pid1 == 0)
 		whild_one(arg);
-	waitpid(arg.pid1, NULL, 0);
+	waitpid(arg.pid1, NULL, WNOHANG);
 	if (argc > 5)
 		whild(arg, argv, argc, arg.nb);
 	arg.pid2 = fork();
@@ -136,7 +133,7 @@ void	pipex(int argc, char **argv, char **envp)
 	if (arg.pid2 == 0)
 		whild_two(arg);
 	ft_close(arg);
-	waitpid(arg.pid2, NULL, 0);
+	waitpid(arg.pid2, NULL, WNOHANG);
 	ft_free(arg.env);
 	ft_free(arg.cmd1);
 	ft_free(arg.cmd2);
@@ -152,6 +149,7 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	//system("leaks pipex");
+	system("lsof -c pipex");
 	return (0);
 }
 

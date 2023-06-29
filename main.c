@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:06:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 15:40:42 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/29 19:26:39 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	whild_one(t_arg arg)
 			i++;
 		}
 	}
-	ft_printf("command not found: %s\n", arg.cmd1[0]);
+	ft_printf("command not found\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -62,7 +62,7 @@ void	whild_two(t_arg arg)
 			i++;
 		}
 	}
-	ft_printf("command not found: %s\n", arg.cmd2[0]);
+	ft_printf("command not found\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -88,7 +88,7 @@ void	pipex(char **argv, char **envp)
 	if (arg.pid2 == 0)
 		whild_two(arg);
 	ft_close(arg);
-	waitpid(arg.pid1, NULL, 0);
+	waitpid(arg.pid1, NULL, WNOHANG);
 	waitpid(arg.pid2, NULL, 0);
 	ft_free(arg.env);
 	ft_free(arg.cmd1);
@@ -104,6 +104,5 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("Error: The number of argument is not correct\n");
 		exit(EXIT_FAILURE);
 	}
-	system("leaks pipex");
 	return (0);
 }

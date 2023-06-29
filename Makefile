@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
+#    By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/29 11:08:11 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/06/29 19:27:41 by wnaiji           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,9 @@ $(NAME): $(OBJS)
 	@printf $(SUCCESS_MSG)
 
 $(NAME_BONUS): $(OBJS_BONUS)
+	@make -C $(LIBFT_PATH)
+	@make -C $(FT_PRINTF_PATH)
+	@make -C $(GNL)
 	@gcc $(CFLAGS) -L $(LIBFT_PATH) -l ft -L $(FT_PRINTF_PATH) -l ftprintf \
 		-L $(GNL) -l get_next_line $(OBJS_BONUS) -o $(NAME_BONUS)
 	@printf "\n"
