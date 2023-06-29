@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 20:20:14 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/29 22:15:38 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,9 @@ void	pipex(int argc, char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc > 4)
+	if (!ft_strncmp(argv[1], "here_doc", 9))
+		
+	else if (argc > 4)
 		pipex(argc, argv, envp);
 	else
 	{
