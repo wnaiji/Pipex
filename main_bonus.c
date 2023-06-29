@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 11:04:33 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/29 13:17:27 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,42 @@ void	whild_one(t_arg arg)
 		free(str);
 		i++;
 	}
-	exit(EXIT_SUCCESS);
+	ft_printf("command not found: %s\n", arg.cmd1[0]);
+	exit(EXIT_FAILURE);
 }
 
-void	whild(t_arg arg, int nb)
+void	whild(t_arg arg, char **argv, int nb)
 {
 	int		i;
 	char	*str;
-(void)nb;
+	pid_t	pid;
+
 	i = 0;
-	while (arg.env[i])
+	pid = fork();
+	if (pid < 0)
+		ft_error("Error: fork pid1\n");
+	if (pid == 0)
 	{
-		str = ft_ft_strjoin(arg.env[i], arg.cmd2[0]);
-		if (access(str, X_OK) == 0)
+		while (arg.env[i])
 		{
-			dup2(arg.fd[0], STDIN_FILENO);
-			dup2(arg.fd_out, STDOUT_FILENO);
-			ft_close(arg);
-			execve(str, arg.cmd2, arg.env);
-			ft_error("Erreur: execve\n");
+			str = ft_ft_strjoin(arg.env[i], arg.cmd2[0]);
+			if (access(str, X_OK) == 0)
+			{
+				dup2(arg.fd[0], STDIN_FILENO);
+				dup2(arg.fd[1], STDOUT_FILENO);
+				ft_close(arg);
+				execve(str, arg.cmd2, arg.env);
+				ft_error("Erreur: execve\n");
+			}
+			free(str);
+			i++;
 		}
-		free(str);
-		i++;
+		ft_printf("command not found: %s\n", arg.cmd1[/////]);
+		exit(EXIT_FAILURE);
 	}
-	exit(EXIT_SUCCESS);
+	waitpid(pid, NULL, 0);
+	if (nb > 2)
+		whild(arg, argc, argv, nb--)
 }
 
 void	whild_two(t_arg arg)
@@ -78,7 +90,8 @@ void	whild_two(t_arg arg)
 		free(str);
 		i++;
 	}
-	exit(EXIT_SUCCESS);
+	ft_printf("command not found: %s\n", arg.cmd2[0]);
+	exit(EXIT_FAILURE);
 }
 
 void	pipex(int argc, char **argv, char **envp)
@@ -97,13 +110,15 @@ void	pipex(int argc, char **argv, char **envp)
 		ft_error("Error: fork pid1\n");
 	if (arg.pid1 == 0)
 		whild_one(arg);
+	waitpid(arg.pid1, NULL, 0);
+	if (argc > 5)
+		whild(t_arg arg, char **argv, int argc - 3);
 	arg.pid2 = fork();
 	if (arg.pid2 < 0)
 		ft_error("Error: fork pid2\n");
 	if (arg.pid2 == 0)
 		whild_two(arg);
 	ft_close(arg);
-	waitpid(arg.pid1, NULL, 0);
 	waitpid(arg.pid2, NULL, 0);
 	ft_free(arg.env);
 	ft_free(arg.cmd1);

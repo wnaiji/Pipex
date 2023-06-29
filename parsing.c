@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:21:58 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 10:14:08 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/29 14:52:40 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	**ft_envp(char **envp)
 			path = ft_strdup(envp[i]);
 		i++;
 	}
+	if (!path)
+		ft_error("");
 	path = ft_strtrim(path, "PATH=");
 	env = ft_split(path, ':');
 	i = 0;

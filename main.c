@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:06:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 11:36:14 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/29 15:40:42 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,22 @@ void	whild_one(t_arg arg)
 	char	*str;
 
 	i = 0;
+	dup2(arg.fd_in, STDIN_FILENO);
+	dup2(arg.fd[1], STDOUT_FILENO);
+	ft_close(arg);
 	while (arg.env[i])
 	{
 		str = ft_ft_strjoin(arg.env[i], arg.cmd1[0]);
-		if (access(str, X_OK) == 0)
+		if (execve(arg.cmd1[0], arg.cmd1, arg.env) == -1)
 		{
-			dup2(arg.fd_in, STDIN_FILENO);
-			dup2(arg.fd[1], STDOUT_FILENO);
-			ft_close(arg);
-			execve(str, arg.cmd1, arg.env);
-			ft_error("Erreur: execve\n");
+			if (access(str, X_OK) == 0)
+			{
+				execve(str, arg.cmd1, arg.env);
+				ft_error("Erreur: execve\n");
+			}
+			free(str);
+			i++;
 		}
-		free(str);
-		i++;
 	}
 	ft_printf("command not found: %s\n", arg.cmd1[0]);
 	exit(EXIT_FAILURE);
@@ -42,19 +45,22 @@ void	whild_two(t_arg arg)
 	char	*str;
 
 	i = 0;
+	dup2(arg.fd[0], STDIN_FILENO);
+	dup2(arg.fd_out, STDOUT_FILENO);
+	ft_close(arg);
 	while (arg.env[i])
 	{
 		str = ft_ft_strjoin(arg.env[i], arg.cmd2[0]);
-		if (access(str, X_OK) == 0)
+		if (execve(arg.cmd2[0], arg.cmd2, arg.env) == -1)
 		{
-			dup2(arg.fd[0], STDIN_FILENO);
-			dup2(arg.fd_out, STDOUT_FILENO);
-			ft_close(arg);
-			execve(str, arg.cmd2, arg.env);
-			ft_error("Erreur: execve\n");
+			if (access(str, X_OK) == 0)
+			{
+				execve(str, arg.cmd2, arg.env);
+				ft_error("Erreur: execve\n");
+			}
+			free(str);
+			i++;
 		}
-		free(str);
-		i++;
 	}
 	ft_printf("command not found: %s\n", arg.cmd2[0]);
 	exit(EXIT_FAILURE);
