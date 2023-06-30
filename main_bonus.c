@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 19:39:19 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/30 20:34:44 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ void	whild_one(t_arg arg)
 				ft_error("Erreur: execve\n");
 			}
 			free(str);
-			i++;
 		}
+		i++;
 	}
 	ft_printf("command not found: %s\n", arg.cmd1[0]);
 	exit(EXIT_FAILURE);
 }
 
-int	whild(t_arg arg, char **argv, int pfd[2], int nb)
+void	whild(t_arg arg, char **argv, int (*pfd)[2], int nb)
 {
 	int		i;
 	char	*str;
@@ -52,11 +52,12 @@ int	whild(t_arg arg, char **argv, int pfd[2], int nb)
 		ft_error("Error: fork pid1\n");
 	if (pid == 0)
 	{
-		close(pfd[0]);
+		arg.cmd = parsing_cmd("cat -e");
+		close((*pfd)[0]);
 		dup2(arg.fd_in, STDIN_FILENO);
-		dup2(pfd[1], STDOUT_FILENO);
-		close(pfd[1]);
 		ft_close(arg);
+		dup2((*pfd)[1], STDOUT_FILENO);
+		close((*pfd)[1]);
 		while (arg.env[i])
 		{
 			str = ft_ft_strjoin(arg.env[i], arg.cmd[0]);
@@ -68,14 +69,13 @@ int	whild(t_arg arg, char **argv, int pfd[2], int nb)
 					ft_error("Error: execve\n");
 				}
 				free(str);
-				i++;
 			}
+			i++;
 		}
 		ft_printf("bash: %s: command not found\n", arg.cmd[0]);
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
-	return (pfd[0]);
 }
 
 void	whild_last(t_arg arg)
@@ -98,8 +98,8 @@ void	whild_last(t_arg arg)
 				ft_error("Erreur: execve\n");
 			}
 			free(str);
-			i++;
 		}
+		i++;
 	}
 	ft_printf("command not found: %s\n", arg.cmd2[0]);
 	exit(EXIT_FAILURE);
@@ -125,7 +125,8 @@ void	pipex(int argc, char **argv, char **envp, t_arg arg)
 		{
 			if (pipe(pfd) == - 1)
 				ft_error("Error: pipe\n");
-			arg.fd_in = whild(arg, argv, pfd, arg.nb);
+			whild(arg, argv, &pfd, arg.nb);
+			arg.fd_in = pfd[0];
 			arg.nb++;
 		}
 	}
