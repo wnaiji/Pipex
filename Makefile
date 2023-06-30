@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+         #
+#    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/06/29 19:27:41 by wnaiji           ###   ########.fr        #
+#    Updated: 2023/06/30 08:21:08 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC = main.c \
 
 SRC_BONUS = main_bonus.c \
 	parsing_bonus.c \
-	outils_bonus.c
+	outils_bonus.c \
+	here_doc.c
 
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

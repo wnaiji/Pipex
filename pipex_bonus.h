@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:30:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 16:37:37 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/30 08:20:49 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,9 @@ int		open_fd(char *file1);
 void	ft_free(char **str);
 void	ft_close(t_arg arg);
 void	ft_error(char *str);
+
+//gestion des here_doc:
+//here_doc.c
+void	here_doc(char **argv, char **envp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 22:15:38 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/30 08:16:42 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	pipex(int argc, char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	if (!ft_strncmp(argv[1], "here_doc", 9))
-		
+		here_doc(argv, envp);
 	else if (argc > 4)
 		pipex(argc, argv, envp);
 	else
