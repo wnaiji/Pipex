@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 13:48:42 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/30 19:39:19 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,24 @@ void	whild_one(t_arg arg)
 	exit(EXIT_FAILURE);
 }
 
-void	whild(t_arg arg, char **argv, int argc, int nb)
+int	whild(t_arg arg, char **argv, int pfd[2], int nb)
 {
 	int		i;
 	char	*str;
 	pid_t	pid;
-
+(void)argv;
+(void)nb;
 	i = 0;
 	pid = fork();
 	if (pid < 0)
 		ft_error("Error: fork pid1\n");
 	if (pid == 0)
 	{
-		dup2(arg.fd[0], STDIN_FILENO);
-		dup2(arg.fd[1], STDOUT_FILENO);
+		close(pfd[0]);
+		dup2(arg.fd_in, STDIN_FILENO);
+		dup2(pfd[1], STDOUT_FILENO);
+		close(pfd[1]);
 		ft_close(arg);
-		arg.cmd1 = parsing_cmd(argv[nb]);
 		while (arg.env[i])
 		{
 			str = ft_ft_strjoin(arg.env[i], arg.cmd[0]);
@@ -73,20 +75,16 @@ void	whild(t_arg arg, char **argv, int argc, int nb)
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
-	if (nb < argc - 3)
-	{
-		nb++;
-		whild(arg, argv, argc, nb);
-	}
+	return (pfd[0]);
 }
 
-void	whild_two(t_arg arg)
+void	whild_last(t_arg arg)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
-	dup2(arg.fd[0], STDIN_FILENO);
+	dup2(arg.fd_in, STDIN_FILENO);
 	dup2(arg.fd_out, STDOUT_FILENO);
 	ft_close(arg);
 	while (arg.env[i])
@@ -109,6 +107,8 @@ void	whild_two(t_arg arg)
 
 void	pipex(int argc, char **argv, char **envp, t_arg arg)
 {
+	int	pfd[2];
+
 	(void)envp;
 	if (pipe(arg.fd) == -1)
 		ft_error("Error: pipe\n");
@@ -119,12 +119,21 @@ void	pipex(int argc, char **argv, char **envp, t_arg arg)
 		whild_one(arg);
 	waitpid(arg.pid1, NULL, WNOHANG);
 	if (argc > 5)
-		whild(arg, argv, argc, arg.nb);
+	{
+		arg.fd_in = arg.fd[0];
+		while (arg.nb < argc - 2)
+		{
+			if (pipe(pfd) == - 1)
+				ft_error("Error: pipe\n");
+			arg.fd_in = whild(arg, argv, pfd, arg.nb);
+			arg.nb++;
+		}
+	}
 	arg.pid2 = fork();
 	if (arg.pid2 < 0)
 		ft_error("Error: fork pid2\n");
 	if (arg.pid2 == 0)
-		whild_two(arg);
+		whild_last(arg);
 	ft_close(arg);
 	waitpid(arg.pid2, NULL, WNOHANG);
 	ft_free(arg.env);

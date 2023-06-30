@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:03:03 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 13:51:01 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/06/30 19:31:48 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)
 	arg.fd_in = open_fd(argv[1]);
 	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	arg.nb = 3;
+	arg.cmd = parsing_cmd(argv[arg.nb]);
 	return (arg);
 }
 
