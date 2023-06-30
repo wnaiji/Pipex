@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 08:16:42 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/30 13:48:42 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,16 +107,9 @@ void	whild_two(t_arg arg)
 	exit(EXIT_FAILURE);
 }
 
-void	pipex(int argc, char **argv, char **envp)
+void	pipex(int argc, char **argv, char **envp, t_arg arg)
 {
-	t_arg	arg;
-
-	arg.cmd1 = parsing_cmd(argv[2]);
-	arg.cmd2 = parsing_cmd(argv[argc - 2]);
-	arg.env = ft_envp(envp);
-	arg.fd_in = open_fd(argv[1]);
-	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	arg.nb = 3;
+	(void)envp;
 	if (pipe(arg.fd) == -1)
 		ft_error("Error: pipe\n");
 	arg.pid1 = fork();
@@ -141,17 +134,26 @@ void	pipex(int argc, char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_arg	arg;
+
+	arg.cmd1 = NULL;
 	if (!ft_strncmp(argv[1], "here_doc", 9))
-		here_doc(argv, envp);
+	{
+		arg = init_arg_here_doc(argc, argv, envp, arg);
+		here_doc(argc, argv, envp, arg);
+	}
 	else if (argc > 4)
-		pipex(argc, argv, envp);
+	{
+		arg = init_arg_pipex(argc, argv, envp, arg);
+		pipex(argc, argv, envp, arg);
+	}
 	else
 	{
 		ft_printf("Error: The number of argument is not correct\n");
 		exit(EXIT_FAILURE);
 	}
-	//system("leaks pipex");
-	system("lsof -c pipex");
+	system("leaks pipex");
+	//system("lsof -c pipex");
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outils_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:03:03 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/28 21:32:25 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/06/30 13:51:01 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,26 @@ void	ft_error(char *str)
 {
 	perror(str);
 	exit(EXIT_FAILURE);
+}
+
+t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)
+{
+	arg.cmd1 = parsing_cmd(argv[2]);
+	arg.cmd2 = parsing_cmd(argv[argc - 2]);
+	arg.env = ft_envp(envp);
+	arg.fd_in = open_fd(argv[1]);
+	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	arg.nb = 3;
+	return (arg);
+}
+
+t_arg	init_arg_here_doc(int argc, char **argv, char **envp, t_arg arg)
+{
+	arg.cmd1 = parsing_cmd(argv[3]);
+	arg.cmd2 = parsing_cmd(argv[argc - 2]);
+	arg.env = ft_envp(envp);
+	arg.fd_in = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
+	arg.nb = 4;
+	return (arg);
 }
