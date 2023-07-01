@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:30:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 11:40:41 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 09:08:17 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_arg
 	pid_t	pid2;
 	int		fd[2];
 	int		nb;
-
+	int		pfd[2];
 }	t_arg;
 
-void	pipex(int argc, char **argv, char **envp, t_arg arg);
+void	pipex(int argc, char **argv, t_arg arg);
 
 //Parsing des cmd et file:
 //parsing.c
@@ -50,9 +50,10 @@ void	ft_close(t_arg arg);
 void	ft_error(char *str);
 t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg);
 t_arg	init_arg_here_doc(int argc, char **argv, char **envp, t_arg arg);
+void	ft_putstrerror(char *str);
 
 //gestion des here_doc:
 //here_doc.c
-void	here_doc(int argc, char **argv, char **envp, t_arg arg);
+void	here_doc(int argc, char **argv, t_arg arg);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outils_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:03:03 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 20:20:57 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 09:08:40 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ void	ft_error(char *str)
 {
 	perror(str);
 	exit(EXIT_FAILURE);
+}
+
+void	ft_putstrerror(char *str)
+{
+	ft_putstr_fd("bash: ", STDOUT_FILENO);
+	ft_putstr_fd(str, STDOUT_FILENO);
+	ft_putstr_fd(": command not found", STDOUT_FILENO);
 }
 
 t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)

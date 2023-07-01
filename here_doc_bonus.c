@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:15:59 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 13:48:22 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 08:42:06 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	here_doc(int argc, char **argv, char **envp, t_arg arg)
+void	here_doc(int argc, char **argv, t_arg arg)
 {
 	char	*str;
 
@@ -28,6 +28,6 @@ void	here_doc(int argc, char **argv, char **envp, t_arg arg)
 	free(str);
 	close(arg.fd_in);
 	arg.fd_in = open(".here_doc", O_RDONLY);
-	pipex(argc, argv, envp, arg);
+	pipex(argc, argv, arg);
 	unlink(".here_doc");
 }

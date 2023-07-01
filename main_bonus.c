@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/30 20:34:44 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 09:13:52 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,47 +35,37 @@ void	whild_one(t_arg arg)
 		}
 		i++;
 	}
-	ft_printf("command not found: %s\n", arg.cmd1[0]);
+	ft_printf("bash: %s: command not found\n", arg.cmd1[0]);
 	exit(EXIT_FAILURE);
 }
 
-void	whild(t_arg arg, char **argv, int (*pfd)[2], int nb)
+void	whild(t_arg arg)
 {
 	int		i;
 	char	*str;
-	pid_t	pid;
-(void)argv;
-(void)nb;
+
 	i = 0;
-	pid = fork();
-	if (pid < 0)
-		ft_error("Error: fork pid1\n");
-	if (pid == 0)
+	close(arg.pfd[0]);
+	dup2(arg.fd_in, STDIN_FILENO);
+	ft_close(arg);
+	dup2(arg.pfd[1], STDOUT_FILENO);
+	close(arg.pfd[1]);
+	while (arg.env[i])
 	{
-		arg.cmd = parsing_cmd("cat -e");
-		close((*pfd)[0]);
-		dup2(arg.fd_in, STDIN_FILENO);
-		ft_close(arg);
-		dup2((*pfd)[1], STDOUT_FILENO);
-		close((*pfd)[1]);
-		while (arg.env[i])
+		str = ft_ft_strjoin(arg.env[i], arg.cmd[0]);
+		if (execve(arg.cmd[0], arg.cmd, arg.env) == -1)
 		{
-			str = ft_ft_strjoin(arg.env[i], arg.cmd[0]);
-			if (execve(arg.cmd[0], arg.cmd, arg.env) == -1)
+			if (access(str, X_OK) == 0)
 			{
-				if (access(str, X_OK) == 0)
-				{
-					execve(str, arg.cmd, arg.env);
-					ft_error("Error: execve\n");
-				}
-				free(str);
+				execve(str, arg.cmd, arg.env);
+				ft_error("Error: execve\n");
 			}
-			i++;
+			free(str);
 		}
-		ft_printf("bash: %s: command not found\n", arg.cmd[0]);
-		exit(EXIT_FAILURE);
+		i++;
 	}
-	waitpid(pid, NULL, 0);
+	ft_printf("bash: %s: command not found\n", arg.cmd[0]);
+	exit(EXIT_FAILURE);
 }
 
 void	whild_last(t_arg arg)
@@ -101,15 +91,12 @@ void	whild_last(t_arg arg)
 		}
 		i++;
 	}
-	ft_printf("command not found: %s\n", arg.cmd2[0]);
+	ft_printf("bash: %s: command not found\n", arg.cmd2[0]);
 	exit(EXIT_FAILURE);
 }
 
-void	pipex(int argc, char **argv, char **envp, t_arg arg)
+void	pipex(int argc, char **argv, t_arg arg)
 {
-	int	pfd[2];
-
-	(void)envp;
 	if (pipe(arg.fd) == -1)
 		ft_error("Error: pipe\n");
 	arg.pid1 = fork();
@@ -117,16 +104,24 @@ void	pipex(int argc, char **argv, char **envp, t_arg arg)
 		ft_error("Error: fork pid1\n");
 	if (arg.pid1 == 0)
 		whild_one(arg);
-	waitpid(arg.pid1, NULL, WNOHANG);
+	waitpid(arg.pid1, NULL, 0);
+	arg.fd_in = arg.fd[0];
 	if (argc > 5)
 	{
-		arg.fd_in = arg.fd[0];
 		while (arg.nb < argc - 2)
 		{
-			if (pipe(pfd) == - 1)
+			arg.cmd = parsing_cmd(argv[arg.nb]);
+			if (pipe(arg.pfd) == - 1)
 				ft_error("Error: pipe\n");
-			whild(arg, argv, &pfd, arg.nb);
-			arg.fd_in = pfd[0];
+			arg.pid1 = fork();
+			if (arg.pid1 < 0)
+				ft_error("Error: fork pid1\n");
+			if (arg.pid1 == 0)
+				whild(arg);
+			waitpid(arg.pid1, NULL, 0);
+			arg.fd_in = arg.pfd[0];
+			close(arg.pfd[0]);
+			close(arg.pfd[1]);
 			arg.nb++;
 		}
 	}
@@ -136,7 +131,7 @@ void	pipex(int argc, char **argv, char **envp, t_arg arg)
 	if (arg.pid2 == 0)
 		whild_last(arg);
 	ft_close(arg);
-	waitpid(arg.pid2, NULL, WNOHANG);
+	waitpid(arg.pid2, NULL, 0);
 	ft_free(arg.env);
 	ft_free(arg.cmd1);
 	ft_free(arg.cmd2);
@@ -150,19 +145,19 @@ int	main(int argc, char **argv, char **envp)
 	if (!ft_strncmp(argv[1], "here_doc", 9))
 	{
 		arg = init_arg_here_doc(argc, argv, envp, arg);
-		here_doc(argc, argv, envp, arg);
+		here_doc(argc, argv, arg);
 	}
 	else if (argc > 4)
 	{
 		arg = init_arg_pipex(argc, argv, envp, arg);
-		pipex(argc, argv, envp, arg);
+		pipex(argc, argv, arg);
 	}
 	else
 	{
 		ft_printf("Error: The number of argument is not correct\n");
 		exit(EXIT_FAILURE);
 	}
-	system("leaks pipex");
+	//system("leaks pipex");
 	//system("lsof -c pipex");
 	return (0);
 }
