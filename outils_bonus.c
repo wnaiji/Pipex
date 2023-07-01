@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outils_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:03:03 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 09:08:40 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/07/01 13:04:03 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)
 	arg.env = ft_envp(envp);
 	arg.fd_in = open_fd(argv[1]);
 	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	arg.nb = 3;
+	arg.nb = 2;
+	arg.cmd = parsing_cmd(argv[arg.nb]);
 	return (arg);
 }
 
