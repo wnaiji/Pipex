@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:03:03 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 13:04:03 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 16:09:24 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)
 	arg.fd_in = open_fd(argv[1]);
 	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	arg.nb = 2;
-	arg.cmd = parsing_cmd(argv[arg.nb]);
+	//arg.cmd = parsing_cmd(argv[arg.nb]);
+	arg.h_d = 0;
 	return (arg);
 }
 
@@ -62,6 +63,7 @@ t_arg	init_arg_here_doc(int argc, char **argv, char **envp, t_arg arg)
 	arg.env = ft_envp(envp);
 	arg.fd_in = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
-	arg.nb = 4;
+	arg.nb = 3;
+	arg.h_d = 1;
 	return (arg);
 }

@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 15:41:34 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 16:15:16 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ void	whild_last(t_arg arg)
 
 void	pipex(int argc, char **argv, t_arg arg)
 {
+	(void)argv;
 	while (arg.nb <= argc - 3)
 	{
-		arg.cmd = parsing_cmd(argv[arg.nb]);
-		if (arg.nb > 2)
+		arg.cmd1 = parsing_cmd(argv[arg.nb]);
+		if (arg.nb > 2 && arg.h_d == 0)
 		{
 			close(arg.fd_in);
 			arg.fd_in = dup(arg.fd[0]);
@@ -86,6 +87,7 @@ void	pipex(int argc, char **argv, t_arg arg)
 		if (arg.pid1 == 0)
 			whild_one(arg);
 		arg.nb++;
+		arg.h_d = 0;
 		waitpid(arg.pid1, NULL, WNOHANG);
 	}
 	arg.fd_in = dup(arg.fd[0]);

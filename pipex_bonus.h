@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:30:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 15:57:39 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 16:05:09 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_arg
 {
 	char	**cmd1;
 	char	**cmd2;
-	char	**cmd;
 	char	**env;
 	int		fd_in;
 	int		fd_out;
@@ -32,7 +31,7 @@ typedef struct s_arg
 	pid_t	pid2;
 	int		fd[2];
 	int		nb;
-	int		pfd[2];
+	int		h_d;
 }	t_arg;
 
 void	pipex(int argc, char **argv, t_arg arg);
