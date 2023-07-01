@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 15:39:13 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 15:41:34 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	pipex(int argc, char **argv, t_arg arg)
 			whild_one(arg);
 		arg.nb++;
 		waitpid(arg.pid1, NULL, WNOHANG);
-	//printf("%s", get_next_line(arg.fd[0]));
 	}
 	arg.fd_in = dup(arg.fd[0]);
 	arg.pid2 = fork();
