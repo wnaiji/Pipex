@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 09:13:52 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/07/01 10:01:59 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,8 @@ void	pipex(int argc, char **argv, t_arg arg)
 		ft_error("Error: fork pid2\n");
 	if (arg.pid2 == 0)
 		whild_last(arg);
-	ft_close(arg);
 	waitpid(arg.pid2, NULL, 0);
+	ft_close(arg);
 	ft_free(arg.env);
 	ft_free(arg.cmd1);
 	ft_free(arg.cmd2);
