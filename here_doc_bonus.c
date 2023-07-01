@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 22:15:59 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 16:06:53 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 16:33:39 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	here_doc(int argc, char **argv, t_arg arg)
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		str = get_next_line(STDIN_FILENO);
 		if (!ft_strncmp(str, limiter, ft_strlen(str)))
-			break;
+			break ;
 		ft_putstr_fd(str, arg.fd_in);
 		free(str);
 	}

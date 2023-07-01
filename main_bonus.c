@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 16:15:16 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 18:40:16 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	whild_one(t_arg arg)
 			i++;
 		}
 	}
+	dup2(2, STDOUT_FILENO);
 	ft_printf("command not found\n");
 	exit(EXIT_FAILURE);
 }
@@ -62,22 +63,20 @@ void	whild_last(t_arg arg)
 			i++;
 		}
 	}
+	dup2(2, STDOUT_FILENO);
 	ft_printf("command not found\n");
 	exit(EXIT_FAILURE);
 }
 
 void	pipex(int argc, char **argv, t_arg arg)
 {
-	(void)argv;
-	while (arg.nb <= argc - 3)
+	while (++arg.nb <= argc - 3)
 	{
-		arg.cmd1 = parsing_cmd(argv[arg.nb]);
+		(ft_free(arg.cmd1), arg.cmd1 = parsing_cmd(argv[arg.nb]));
 		if (arg.nb > 2 && arg.h_d == 0)
 		{
-			close(arg.fd_in);
-			arg.fd_in = dup(arg.fd[0]);
-			close(arg.fd[0]);
-			close(arg.fd[1]);
+			(close(arg.fd_in), arg.fd_in = dup(arg.fd[0]));
+			(close(arg.fd[0]), close(arg.fd[1]));
 		}
 		if (pipe(arg.fd) == -1)
 			ft_error("Error: pipe\n");
@@ -86,21 +85,16 @@ void	pipex(int argc, char **argv, t_arg arg)
 			ft_error("Error: fork pid1\n");
 		if (arg.pid1 == 0)
 			whild_one(arg);
-		arg.nb++;
 		arg.h_d = 0;
 		waitpid(arg.pid1, NULL, WNOHANG);
 	}
-	arg.fd_in = dup(arg.fd[0]);
-	arg.pid2 = fork();
+	((close(arg.fd_in), arg.fd_in = dup(arg.fd[0])), arg.pid2 = fork());
 	if (arg.pid2 < 0)
 		ft_error("Error: fork pid2\n");
 	if (arg.pid2 == 0)
 		whild_last(arg);
-	ft_close(arg);
-	waitpid(arg.pid2, NULL, 0);
-	ft_free(arg.env);
-	ft_free(arg.cmd1);
-	ft_free(arg.cmd2);
+	(ft_close(arg), waitpid(arg.pid2, NULL, 0));
+	(ft_free(arg.env), ft_free(arg.cmd1), ft_free(arg.cmd2));
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -123,8 +117,5 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("Error: The number of argument is not correct\n");
 		exit(EXIT_FAILURE);
 	}
-	//system("leaks pipex");
-	//system("lsof -c pipex");
 	return (0);
 }
-

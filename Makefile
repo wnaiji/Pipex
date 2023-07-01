@@ -6,7 +6,7 @@
 #    By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/07/01 15:57:44 by wnaiji           ###   ########.fr        #
+#    Updated: 2023/07/01 18:40:33 by wnaiji           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OBJS_BONUS = $(addprefix $(OBJ_DIR)/,$(SRC_BONUS:.c=.o))
 NAME = pipex
 NAME_BONUS = pipex_bonus
 
-CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
+CFLAGS = -Werror -Wextra -Wall
 SUCCESS_MSG = "\033[0;32mCompilation successful. $(NAME) created.\033[0m\n"
 ERROR_MSG = "\033[0;31mCompilation failed.\033[0m\n"
 LIBFT_PATH = ./Libft/

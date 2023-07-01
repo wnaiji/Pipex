@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:30:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 16:05:09 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 16:33:53 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_close(t_arg arg);
 void	ft_error(char *str);
 t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg);
 t_arg	init_arg_here_doc(int argc, char **argv, char **envp, t_arg arg);
-void	ft_putstrerror(char *str);
 
 //gestion des here_doc:
 //here_doc.c

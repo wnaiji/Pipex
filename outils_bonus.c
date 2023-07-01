@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:03:03 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 16:09:24 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 18:21:38 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ void	ft_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_putstrerror(char *str)
-{
-	ft_putstr_fd("bash: ", STDOUT_FILENO);
-	ft_putstr_fd(str, STDOUT_FILENO);
-	ft_putstr_fd(": command not found", STDOUT_FILENO);
-}
-
 t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)
 {
 	arg.cmd1 = parsing_cmd(argv[2]);
@@ -50,8 +43,9 @@ t_arg	init_arg_pipex(int argc, char **argv, char **envp, t_arg arg)
 	arg.env = ft_envp(envp);
 	arg.fd_in = open_fd(argv[1]);
 	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	arg.nb = 2;
-	//arg.cmd = parsing_cmd(argv[arg.nb]);
+	if (arg.fd_out == -1)
+		perror("Error: open STDOUT\n");
+	arg.nb = 1;
 	arg.h_d = 0;
 	return (arg);
 }
@@ -62,8 +56,10 @@ t_arg	init_arg_here_doc(int argc, char **argv, char **envp, t_arg arg)
 	arg.cmd2 = parsing_cmd(argv[argc - 2]);
 	arg.env = ft_envp(envp);
 	arg.fd_in = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (arg.fd_out == -1)
+		perror("Error: open STDOUT\n");
 	arg.fd_out = open(argv[argc - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
-	arg.nb = 3;
+	arg.nb = 2;
 	arg.h_d = 1;
 	return (arg);
 }

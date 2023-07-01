@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:06:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 19:26:39 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 18:17:14 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	whild_one(t_arg arg)
 			i++;
 		}
 	}
+	dup2(2, STDOUT_FILENO);
 	ft_printf("command not found\n");
 	exit(EXIT_FAILURE);
 }
@@ -62,6 +63,7 @@ void	whild_two(t_arg arg)
 			i++;
 		}
 	}
+	dup2(2, STDOUT_FILENO);
 	ft_printf("command not found\n");
 	exit(EXIT_FAILURE);
 }
@@ -75,6 +77,8 @@ void	pipex(char **argv, char **envp)
 	arg.env = ft_envp(envp);
 	arg.fd_in = open_fd(argv[1]);
 	arg.fd_out = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (arg.fd_out == -1)
+		perror("Error: open STDOUT\n");
 	if (pipe(arg.fd) == -1)
 		ft_error("Error: pipe\n");
 	arg.pid1 = fork();
@@ -90,9 +94,7 @@ void	pipex(char **argv, char **envp)
 	ft_close(arg);
 	waitpid(arg.pid1, NULL, WNOHANG);
 	waitpid(arg.pid2, NULL, 0);
-	ft_free(arg.env);
-	ft_free(arg.cmd1);
-	ft_free(arg.cmd2);
+	(ft_free(arg.env), ft_free(arg.cmd1), ft_free(arg.cmd2));
 }
 
 int	main(int argc, char **argv, char **envp)

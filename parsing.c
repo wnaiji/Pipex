@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 14:21:58 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/29 14:52:40 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 18:29:09 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ int	open_fd(char *file1)
 	}
 	fd = open(file1, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_printf("Error: File is not open\n");
-		exit(EXIT_FAILURE);
-	}
+		perror("Error: File is not open\n");
 	return (fd);
 }
