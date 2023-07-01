@@ -6,7 +6,7 @@
 /*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 18:40:16 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/01 21:41:23 by wnaiji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	whild_one(t_arg arg)
 	char	*str;
 
 	i = 0;
-	dup2(arg.fd_in, STDIN_FILENO);
-	dup2(arg.fd[1], STDOUT_FILENO);
+	if (arg.fd_in == -1)
+		exit(EXIT_FAILURE);
+	(dup2(arg.fd_in, STDIN_FILENO), dup2(arg.fd[1], STDOUT_FILENO));
 	ft_close(arg);
 	while (arg.env[i])
 	{
