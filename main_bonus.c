@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wnaiji <wnaiji@student.42.fr>              +#+  +:+       +#+        */
+/*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 20:04:15 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/07/01 21:41:23 by wnaiji           ###   ########.fr       */
+/*   Updated: 2023/07/02 00:11:43 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,3 +120,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
